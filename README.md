@@ -1,4 +1,8 @@
 # Simulación de sistema de colas
+
+## Estructura del proyecto
+
+```
 simulacion-colas/
 │
 ├── src/               # Código fuente .py
@@ -11,4 +15,4 @@ simulacion-colas/
 │       └── informe.pdf
 ├── requirements.txt
 └── README.md
-
+```
