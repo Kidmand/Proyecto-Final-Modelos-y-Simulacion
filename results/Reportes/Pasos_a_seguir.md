@@ -25,7 +25,6 @@ Se tienen en cuenta las propiedades teóricas y prácticas deseables en un gener
 | 📊 **P2 (Test de aleatoriedad)** | Debe pasar tests estadísticos para garantizar distribución uniforme e independencia. |
 | 📚 **P3 (Conocimiento teórico)** | Se debe conocer la estructura del generador para garantizar confiabilidad.           |
 | ♻️ **Repetibilidad**             | Mismo seed → misma secuencia. Permite reproducibilidad en simulaciones.              |
-| 🌐 **Portabilidad**              | La secuencia debería ser igual al ejecutar el generador en distintos entornos.       |
 | ⚡ **Velocidad**                 | Evaluar el rendimiento al generar grandes volúmenes de números.                      |
 
 ---
@@ -57,4 +56,16 @@ Se tienen en cuenta las propiedades teóricas y prácticas deseables en un gener
 
 ### 5. ⏱️ Velocidad
 
-- Medir el tiempo necesario para generar 1
+- Medir el tiempo necesario para generar 1 millón de números con cada generador.
+
+## 📊 Resultados esperados
+
+Al final se construye una tabla comparativa como la siguiente:
+
+| Generador | Repetible | Media | Varianza | KS/Chi² Test | Autocorrelación | Tiempo (s) |
+| --------- | --------- | ----- | -------- | ------------ | --------------- | ---------- |
+| LCG       | Sí        | 0.499 | 0.0834   | ✔️           | ≈ 0             | 0.12       |
+| XORShift  | Sí        | 0.501 | 0.0832   | ✔️           | ≈ 0             | 0.05       |
+| MT19937   | Sí        | 0.500 | 0.0833   | ✔️           | ≈ 0             | 0.10       |
+
+---
