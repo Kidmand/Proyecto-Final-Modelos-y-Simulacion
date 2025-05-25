@@ -28,9 +28,9 @@ simulacion-colas/
 │
 ├── src/                         # Código fuente Python
 │   ├── generadores/             # Implementación de generadores
-│   │   ├── lcg.py
-│   │   ├── xorshift.py
-│   │   └── MerTwi.py
+│   │   ├── LCG.py
+│   │   ├── XORshift.py
+│   │   └── MersenneTwiste.py
 │   ├── test_generadores.py      # Script para comparar los generadores
 │   └── simulacion.py            # (Más adelante) simulación del sistema de colas
 │
