@@ -59,15 +59,21 @@ cd simulacion-colas
 ```
 
 ### 2. Crear y activar un entorno virtual
+```bash
 python3 -m venv venv
 source venv/bin/activate      # Linux/macOS
+```
 
 ### 3. Instalar dependencias
+```bash
 pip install -r requirements.txt
+```
 
 ### 4. Ejecutar los scripts
+```bash
 python src/test_generadores.py       # Para testear los generadores
 python src/simulacion.py             # Para ejecutar la simulación principal
+```
 
 
 ## Licencia
