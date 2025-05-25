@@ -5,14 +5,23 @@
 ```
 simulacion-colas/
 │
-├── src/               # Código fuente .py
-│   └── simulacion.py
-├── results/           # Resultados: gráficos, tablas, etc.
-│   ├── graficos/
+├── src/                         # Código fuente Python
+│   ├── generadores/             # Implementación de generadores
+│   │   ├── lcg.py
+│   │   ├── xorshift.py
+│   │   └── pcg.py
+│   ├── test_generadores.py      # Script para comparar los generadores
+│   └── simulacion.py            # (Más adelante) simulación del sistema de colas
+│
+├── results/                     # Resultados de simulación
+│   ├── graficos/                # Imágenes generadas
 │   │   ├── uso_servidor.png
 │   │   ├── tiempos_espera_hist.png
-│   └── reportes/
+│   └── reportes/                # Informes exportados
 │       └── informe.pdf
-├── requirements.txt
-└── README.md
+│
+├── requirements.txt             # Librerías necesarias
+├── README.md                    # Descripción general del proyecto
+└── .gitignore                   # Archivos a ignorar por Git
+
 ```
