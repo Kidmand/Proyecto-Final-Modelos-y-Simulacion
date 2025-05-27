@@ -1,3 +1,5 @@
+import random
+random.seed(42)
 class MT19937:
 
     w, n = 32, 624
@@ -47,9 +49,12 @@ class MT19937:
 
 
 def main():
-    rng = MT19937(0)
+    rng = MT19937(42)
     for _ in range(10):
         print(rng.random())
+    print()    
+    for _ in range(10):
+        print(random.random())
 
 
 if __name__ == '__main__':

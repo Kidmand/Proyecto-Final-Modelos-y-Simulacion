@@ -5,12 +5,13 @@ class LCG:
         self.m = 2**31 - 1
         self.y = seed
 
-    def next(self):
+    def random(self):
         self.y = (self.a * self.y + self.c) % self.m
         return self.y / self.m  # Número uniforme en [0, 1)
 
 
 # Ejemplo de uso:
-lcg = LCG(seed=12345)
-for _ in range(10):
-    print(lcg.next())
+if __name__ == '__main__':
+    lcg = LCG(12345)
+    for _ in range(10):
+        print(lcg.random())
