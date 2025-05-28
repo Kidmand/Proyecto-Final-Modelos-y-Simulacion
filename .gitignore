@@ -1,0 +1,11 @@
+# Archivos de Python en general
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Informes de pruebas
+*.log
+*.tmp
+*.coverage
+.coverage.*
+htmlcov/
