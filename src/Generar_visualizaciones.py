@@ -4,7 +4,7 @@ from generadores.LCG import LCG
 from generadores.XORShift import XORShift
 from generadores.MersenneTwister import MT19937
 
-N = 100000
+N = 100002
 
 def plot_histograma(datos, titulo, nombre_archivo):
     plt.hist(datos, bins=50, range=(0, 1), edgecolor='black', alpha=0.7)
@@ -15,17 +15,7 @@ def plot_histograma(datos, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
     plt.close()
     
-def generar_histogramas():
-    generadores = [
-        ("LCG", LCG(12345)),
-        ("XORShift", XORShift(12345)),
-        ("MersenneTwister", MT19937(12345))
-    ]
-    
-    for nombre, generador in generadores:
-        datos = [generador.random() for _ in range(N)]
-        plot_histograma(datos,f"Histograma-{nombre}", f"results/Graficos/Histograma_{nombre}.png")
-    
+
 def plot_pares(datos, titulo, nombre_archivo):
     x = datos[:-1]
     y = datos[1:]
@@ -39,7 +29,25 @@ def plot_pares(datos, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
     plt.close()
 
-def generar_grafico_pares():
+def plot_cubo(datos, titulo, nombre_archivo):
+    xs = datos[0::3]
+    ys = datos[1::3]
+    zs = datos[2::3]
+    
+    fig = plt.figure()
+    plt.title(titulo)
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(xs, ys, zs, c='r', marker='o')
+    ax.set_xlabel('X_i')
+    ax.set_ylabel('X_{i+1}')
+    ax.set_zlabel("X_{i+2}")
+    plt.savefig(nombre_archivo)
+    plt.close()
+    
+
+    
+    
+if __name__ == "__main__":
     generadores = [
         ("LCG", LCG(12345)),
         ("XORShift", XORShift(12345)),
@@ -48,10 +56,6 @@ def generar_grafico_pares():
     
     for nombre, generador in generadores:
         datos = [generador.random() for _ in range(N)]
+        plot_histograma(datos,f"Histograma-{nombre}", f"results/Graficos/Histograma_{nombre}.png")
         plot_pares(datos,f"Pares-{nombre}", f"results/Graficos/Pares_{nombre}.png")
-
-    
-        
-if __name__ == "__main__":
-    generar_histogramas()
-    generar_grafico_pares()
+        plot_cubo(datos,f"Cubo-{nombre}", f"results/Graficos/Cubo_{nombre}.png")
