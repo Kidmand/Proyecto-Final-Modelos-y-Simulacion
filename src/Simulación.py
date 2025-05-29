@@ -3,8 +3,8 @@ from generadores.MersenneTwister import MT19937
 from generadores.XORShift import XORShift
 import numpy as np
 
-LAMDA_MAX = 30
-LAMDA_EXP = 35
+LAMDA_MAX = 30  # Tasa máxima de llegadas de clientes. 
+LAMDA_EXP = 35  # Tasa de atención de clientes (clientes/hora). 
 
 def exponencial(generador_U):
     U = 1 - generador_U.random()
