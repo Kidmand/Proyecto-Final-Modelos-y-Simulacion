@@ -130,7 +130,6 @@ print("\nTiempos no atendidos de los clientes:")
 for cliente, tiempo in espera_servidor:
     print(f"  Cliente {cliente}: {tiempo:.2f}")
 
-porcentaje = porcentaje_tiempo_ocupado(espera_servidor, 4)*100
 print(
     f"\nPorcentaje de tiempo que el servidor estuvo ocupado: {porcentaje:.2f}%")
 print(f"Tiempo promedio de atención por cliente: {tiempo_promedio:.2f} horas")
