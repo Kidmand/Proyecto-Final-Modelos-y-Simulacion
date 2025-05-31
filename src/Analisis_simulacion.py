@@ -92,12 +92,12 @@ if __name__ == "__main__":
             0, llegadas_clientes, tiempos_atencion, HORAS)
         utilizacion_horas = porcentaje_tiempo_ocupado_por_hora(espera_servidor, HORAS)
         evolucion_longitud_de_cola(
-            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/Longitud_{nombre}.png")
+            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/Graficos/Simulacion/Longitud_{nombre}.png")
         histograma_tiempos_de_espera(
-            tiempo_espera, f"Histograma Espera {nombre}", f"results/Espera_{nombre}.png")
+            tiempo_espera, f"Histograma Espera {nombre}", f"results/Graficos/Simulacion/Espera_{nombre}.png")
         utilizacion_servidor(
-            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/Uso_{nombre}.png")
+            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/Graficos/Simulacion/Uso_{nombre}.png")
         tiempo_entre_arribos(
-            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/Arribos_{nombre}.png")
+            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/Graficos/Simulacion/Arribos_{nombre}.png")
         tiempo_entre_servicios( 
-            NT, espera_servidor , f"Tiempo entre servicios-{nombre}", f"results/Servicios_{nombre}.png")
+            NT, espera_servidor , f"Tiempo entre servicios-{nombre}", f"results/Graficos/Simulacion/Servicios_{nombre}.png")
