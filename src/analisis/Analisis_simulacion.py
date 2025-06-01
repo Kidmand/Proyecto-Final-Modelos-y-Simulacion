@@ -9,6 +9,7 @@ from Simulación import guardar_info, porcentaje_tiempo_ocupado, simulation, por
 
 HORAS = 48
 
+
 def evolucion_longitud_de_cola(distribucion_longitud_cola, titulo, nombre_archivo):
     tiempos = [t for t, l in distribucion_longitud_cola]
     longitudes = [l for t, l in distribucion_longitud_cola]
@@ -22,10 +23,11 @@ def evolucion_longitud_de_cola(distribucion_longitud_cola, titulo, nombre_archiv
     plt.savefig(nombre_archivo)
     plt.close()
 
+
 def histograma_tiempos_de_espera(tiempo_espera, titulo, nombre_archivo):
     esperas = [e for _, e in tiempo_espera]
     n = len(tiempo_espera)
-    #Usamos regla de Sturges
+    # Usamos regla de Sturges
     num_bins = int(np.ceil(np.log2(n)+1))
 
     plt.hist(esperas, bins=num_bins, edgecolor='black', color='pink')
@@ -35,6 +37,7 @@ def histograma_tiempos_de_espera(tiempo_espera, titulo, nombre_archivo):
     plt.grid(True)
     plt.savefig(nombre_archivo)
     plt.close()
+
 
 def utilizacion_servidor(utilizacion_horas, titulo, nombre_archivo):
     horas = list(range(len(utilizacion_horas)))  # 0 a 47
@@ -48,10 +51,12 @@ def utilizacion_servidor(utilizacion_horas, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
     plt.close()
 
+
 def tiempo_entre_arribos(llegadas_clientes, titulo, nombre_archivo):
-    entre_arribos = [llegadas_clientes[i+1] - llegadas_clientes[i] for i in range(len(llegadas_clientes)-1)]
+    entre_arribos = [llegadas_clientes[i+1] - llegadas_clientes[i]
+                     for i in range(len(llegadas_clientes)-1)]
     n = len(entre_arribos)
-    #Usamos regla de Sturges
+    # Usamos regla de Sturges
     num_bins = int(np.ceil(np.log2(n)+1))
 
     plt.hist(entre_arribos, bins=num_bins, edgecolor='black', color='pink')
@@ -62,12 +67,14 @@ def tiempo_entre_arribos(llegadas_clientes, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
     plt.close()
 
-def tiempo_entre_servicios( NT, espera_servidor , titulo, nombre_archivo):
-    faltan_ceros = NT - len(espera_servidor) 
-    entre_servicios = [inactividad for _,inactividad in espera_servidor] + [0]*faltan_ceros
+
+def tiempo_entre_servicios(NT, espera_servidor, titulo, nombre_archivo):
+    faltan_ceros = NT - len(espera_servidor)
+    entre_servicios = [inactividad for _,
+                       inactividad in espera_servidor] + [0]*faltan_ceros
 
     n = len(entre_servicios)
-    #Usamos regla de Sturges
+    # Usamos regla de Sturges
     num_bins = int(np.ceil(np.log2(n)+1))
 
     plt.hist(entre_servicios, bins=num_bins, edgecolor='black', color='pink')
@@ -90,14 +97,15 @@ if __name__ == "__main__":
         NT, llegadas_clientes, tiempos_atencion = simulation(HORAS, generador)
         distribucion_longitud_cola, tiempo_espera, espera_servidor = guardar_info(
             0, llegadas_clientes, tiempos_atencion, HORAS)
-        utilizacion_horas = porcentaje_tiempo_ocupado_por_hora(espera_servidor, HORAS)
+        utilizacion_horas = porcentaje_tiempo_ocupado_por_hora(
+            espera_servidor, HORAS)
         evolucion_longitud_de_cola(
-            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/Graficos/Simulacion/Longitud_{nombre}.png")
+            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/graficos/simulacion_histogramas/Longitud_{nombre}.png")
         histograma_tiempos_de_espera(
-            tiempo_espera, f"Histograma Espera {nombre}", f"results/Graficos/Simulacion/Espera_{nombre}.png")
+            tiempo_espera, f"Histograma Espera {nombre}", f"results/graficos/simulacion_histogramas/Espera_{nombre}.png")
         utilizacion_servidor(
-            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/Graficos/Simulacion/Uso_{nombre}.png")
+            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/graficos/simulacion_histogramas/Uso_{nombre}.png")
         tiempo_entre_arribos(
-            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/Graficos/Simulacion/Arribos_{nombre}.png")
-        tiempo_entre_servicios( 
-            NT, espera_servidor , f"Tiempo entre servicios-{nombre}", f"results/Graficos/Simulacion/Servicios_{nombre}.png")
+            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/graficos/simulacion_histogramas/Arribos_{nombre}.png")
+        tiempo_entre_servicios(
+            NT, espera_servidor, f"Tiempo entre servicios-{nombre}", f"results/graficos/simulacion_histogramas/Servicios_{nombre}.png")
