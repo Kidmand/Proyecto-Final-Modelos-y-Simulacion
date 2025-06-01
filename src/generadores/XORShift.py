@@ -9,19 +9,19 @@ class XORShift:
 
     def generate(self):
         self.y ^= (self.y << self.a) & 0xFFFFFFFF
-        self.y ^= (self.y >> self.b) 
+        self.y ^= (self.y >> self.b)
         self.y ^= (self.y << self.c) & 0xFFFFFFFF
-        return self.y 
-
+        return self.y
 
     def random(self):
         return self.generate() / float(self.max_val)
 
-    
+
 def main():
     rng = XORShift(182374)
     for _ in range(10):
         print(rng.random())
+
 
 if __name__ == '__main__':
     main()
