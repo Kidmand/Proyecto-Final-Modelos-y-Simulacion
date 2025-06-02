@@ -26,24 +26,29 @@ La simulación abarca un período de **48 horas**.
 ```
 simulacion-colas/
 │
-├── src/                         # Código fuente Python
-│   ├── generadores/             # Implementación de generadores
+├── src/                              # Código fuente Python
+|   ├── analisis/
+|   |   ├── Analisis
+│   ├── generadores/                  # Implementación de generadores
 │   │   ├── LCG.py
 │   │   ├── XORshift.py
 │   │   └── MersenneTwiste.py
-│   ├── test_generadores.py      # Script para comparar los generadores
-│   └── simulacion.py            # (Más adelante) simulación del sistema de colas
+|   ├── test/
+│   |   ├── test_generadores.py       # Script para comparar los generadores
+│   └── simulacion.py                 # (Más adelante) simulación del sistema de colas
 │
-├── results/                     # Resultados de simulación
-│   ├── graficos/                # Imágenes generadas
-│   │   ├── uso_servidor.png
-│   │   ├── tiempos_espera_hist.png
-│   └── reportes/                # Informes exportados
+├── results/                          # Resultados de simulación
+│   ├── graficos/                     # Imágenes generadas
+│   │   ├── generadores_histogramas/
+|   |   |   |── Cubo.png
+│   │   ├── simulacion_histogramas/
+|   |   |   |── Arribos.png
+│   └── reportes/                     # Informes exportados
 │       └── informe.pdf
 │
-├── requirements.txt             # Librerías necesarias
-├── README.md                    # Descripción general del proyecto
-└── .gitignore                   # Archivos a ignorar por Git
+├── requirements.txt                  # Librerías necesarias
+├── README.md                         # Descripción general del proyecto
+└── .gitignore                        # Archivos a ignorar por Git
 
 ```
 
