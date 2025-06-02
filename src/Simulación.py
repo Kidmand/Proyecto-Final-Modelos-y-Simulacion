@@ -104,8 +104,8 @@ def porcentaje_tiempo_ocupado_por_hora(espera_servidor, horas):
 
     for i in range(horas):
         esperas = [ espera for (hora,espera) in espera_servidor if int(hora) == i] #Se puede optimizar
-        tiempo_en_desuso = 1 - sum(esperas)
-        utilizacion_por_hora.append(tiempo_en_desuso * 100)
+        tiempo_en_uso = 1 - sum(esperas)
+        utilizacion_por_hora.append(tiempo_en_uso * 100)
 
     return utilizacion_por_hora
 
