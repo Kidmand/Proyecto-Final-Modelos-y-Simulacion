@@ -97,9 +97,18 @@ Estos valores corresponden a una de las tuplas recomendadas en el artículo orig
 
 ---
 
+## Descripción del problema:
+
+### Detalles del método de simulación.
+- La idea principal del método radica en generar durante 48 horas tanto el proceso de poisson que sería los momentos en que los clientes llegan, y los horarios de atención que siguen una distribución exponencial de parámetro lamda = 1/35. Por lo que en primera parte simulamos el proceso, guardamos todos los datos en un array y con el tamaño de ese array simulamos los horarios de atención y guardamos todos esos datos en otro array. 
+Luego con esos dos arrays vamos calculando los demás datos, es decir
+
+
 [1] Park, S. K., & Miller, K. W. (1988). Random number generators: Good ones are hard to find. *Communications of the ACM*, 31(10), 1192–1201. https://doi.org/10.1145/63039.63042
 
 [2]  Marsaglia, George (July 2003). "Xorshift RNGs". Journal of Statistical Software.
+
+
 
 
 
