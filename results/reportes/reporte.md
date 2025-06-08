@@ -97,6 +97,93 @@ Estos valores corresponden a una de las tuplas recomendadas en el artículo orig
 
 ---
 
+### 3. Mersenne Twister
+
+**Parámetros del Algoritmo General del Mersenne Twister**
+
+El algoritmo general del Mersenne Twister se caracteriza por las siguientes cantidades:
+
+- `w`: tamaño de palabra (en bits)
+- `n`: grado de recurrencia
+- `m`: palabra intermedia, un desplazamiento usado en la relación de recurrencia que define la serie `x`, con `1 ≤ m < n`
+- `r`: punto de separación de una palabra, o número de bits de la máscara de bits inferiores, con `0 ≤ r ≤ w - 1`
+- `a`: coeficientes de la twist matrix en forma racional normal
+- `b`, `c`: máscaras de bits de atenuación (tempering) TGFSR(R)
+- `s`, `t`: desplazamientos de bits de atenuación TGFSR(R)
+- `u`, `d`, `l`: desplazamientos y máscaras de bits adicionales de atenuación del Mersenne Twister
+
+Con la restricción de que $2^{ n * w - r} - 1$ sea un primo de Mersenne.
+
+**Parámetros concretos del Mersenne Twister (MT19937)**
+
+- `(w, n, m, r) = (32, 624, 397, 31)`
+- `a = 0x9908B0DF`
+- `(u, d) = (11, 0xFFFFFFFF)`
+- `(s, b) = (7, 0x9D2C5680)`
+- `(t, c) = (15, 0xEFC60000)`
+- `l = 18`
+
+**Fórmula General**
+
+El Mersenne Twister genera una secuencia de números a partir de una recurrencia lineal sobre un campo finito binario $\mathbb{F}_2$.
+
+La idea general es definir una sucesión $x_{i}$ mediante una relación de recurrencia sencilla y luego devolver números de la forma $x_{i}^T$ donde $T$ es una matriz invertible en $\mathbb{F}_2$ (llamada *tempering matrix*).
+
+Esta sucesión se define como:
+
+$$
+x_{k+n} = x_{k+m} \oplus \left( (x_k^u \,\|\, x_{k+1}^l) \cdot A \right)
+$$
+
+con k = 0, 1, 2...
+
+
+- $x_{k}$: k-ésimo número del estado interno (32 bits)
+- $(x_k^u \,\|\, x_{k+1}^l)$: combinación de los bits altos de `x[k]` y los bajos de `x[k+1]`
+- $A$ : matriz de transformación lineal
+- ⊕ : operación XOR
+
+La transformación *twist* usa la matriz $A$ que se define como:
+
+$
+A =
+\begin{pmatrix}
+0 & I_{w-1} \\
+a_{w-1} & (a_{w-2}, \dots, a_0)
+\end{pmatrix}
+$
+
+
+- $I_{w-1}$ : matriz identidad de tamaño $(w-1) × (w-1)$
+
+Esto permite expresar la multiplicación por A de la siguente forma:
+
+    Si x_0 = 0: x · A = x >> 1
+
+    Si x_0 = 1: x · A = (x >> 1) ⊕ a
+
+donde $x_{0}$ es el bit menos significativo de x.
+
+Para T (tempering matrix) como queremos que sea fácilmente computable, por lo que no se la construye directamente. En el caso del Mersenne Twister, esta transformación se define como sigue:
+
+    y = x ^ ((x >> u) & d)
+
+    y = y ^ ((y << s) & b)
+
+    y = y ^ ((y << t) & c)
+
+    z = y ^ (y >> l)
+
+Donde:
+
+- `x` es el siguiente valor de la serie generada,
+- `y` es un valor intermedio temporal,
+- `z` es el valor final devuelto por el algoritmo,
+- `>>` y `<<` son desplazamientos binarios a la derecha e izquierda, respectivamente,
+- `&` es la operación AND bit a bit,
+- `^` representa XOR bit a bit.
+
+
 ## Descripción del problema:
 
 ### Detalles del método de simulación.
