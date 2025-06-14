@@ -97,7 +97,7 @@ Estos valores corresponden a una de las tuplas recomendadas en el artículo orig
 
 ### 3. Mersenne Twister
 
-**Parámetros del Algoritmo General del Mersenne Twister**
+**Parámetros del Algoritmo General del Mersenne Twister** [3]
 
 El algoritmo general del Mersenne Twister se caracteriza por las siguientes cantidades:
 
@@ -284,16 +284,19 @@ Lo cual confirma de manera más precisa, que los RNGs producen secuencias de nú
 
 En estos dos primeros gráficos, aquellos que corresponden a los generadores LCG y MT, verificamos otra de las propiedades necesarias de un buen RNG, la inexistencia de hiperplanos cuando se grafican ternas en un cubo de lado 1.
 
+La nube de puntos se distribuye de manera dispersa y sin alineaciones evidentes, lo cual es indicativo de buena aleatoriedad en dimensión 3.
+
 ![Cubo XORShift](/results/graficos/generadores/Cubo_XORShift.png)
 
-Tal no es el caso para el RNG XORShift,
-COMPLETAR
+Tal no es el caso para el RNG XORShift ,donde se observan claramente alineamientos y formaciones en hiperplanos. Esta es una limitación conocida de este generador, en particular en sus variantes más simples. Debido a que XORShift realiza solo operaciones bitwise simples (XOR y desplazamientos), la entropía introducida entre bits sucesivos es limitada. 
+
+Este comportamiento ha sido estudiado en la literatura (Marsaglia, 2003; Vigna, 2014), y es una de las razones por las que XORShift **no se recomienda para simulaciones que requieran buena distribución multidimensional**. 
 
 ### Velocidad
 
 Se puede verificar la velocidad de los generadores utilizando el script y seleccionando la opción de "Ejecutar análisis de generadores".
 
-En una computadora con procesador Ryzen 5 .... se obtienen los siguientes resultados:
+En una computadora con procesador AMD Ryzen 5 PRO 4650G se obtienen los siguientes resultados:
 
 - LCG tarda 0.2963 segundos en generar 1_000_000 números
 - XORShift tarda 0.5894 segundos en generar 1_000_000 números
@@ -397,3 +400,8 @@ Podemos ver como el uso de buenos generadores aleatorios conducen a resultados l
 [1] Park, S. K., & Miller, K. W. (1988). Random number generators: Good ones are hard to find. _Communications of the ACM_, 31(10), 1192–1201. https://doi.org/10.1145/63039.63042
 
 [2] Marsaglia, George (July 2003). "Xorshift RNGs". Journal of Statistical Software.
+
+[3] Matsumoto, M., & Nishimura, T. (1998). "Mersenne Twister: A 623-dimensionally equidistributed uniform pseudo-random number generator". ACM Transactions on Modeling and Computer Simulation (TOMACS), 8(1), 3–30.
+
+[4] Vigna, S. (2014). "Further scramblings of Marsaglia’s xorshift generators".  
+Disponible en: [https://arxiv.org/abs/1402.6246](https://arxiv.org/abs/1402.6246)
