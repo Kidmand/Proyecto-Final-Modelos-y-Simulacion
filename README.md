@@ -76,11 +76,10 @@ source venv/bin/activate      # Linux/macOS
 pip install -r requirements.txt
 ```
 
-### 4. Ejecutar los scripts
+### 4. Ejecutar el script y seleccionar la opción que desee del menú
 
 ```bash
-python src/test_generadores.py       # Para testear los generadores
-python src/simulacion.py             # Para ejecutar la simulación principal
+./run.sh
 ```
 
 ## Licencia
