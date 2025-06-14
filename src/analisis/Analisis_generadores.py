@@ -57,8 +57,8 @@ if __name__ == "__main__":
     for nombre, generador in generadores:
         datos = [generador.random() for _ in range(N)]
         plot_histograma(
-            datos, f"Histograma-{nombre}", f"results/graficos/generadores_histogramas/Histograma_{nombre}.png")
+            datos, f"Histograma-{nombre}", f"results/graficos/generadores/Histograma_{nombre}.png")
         plot_pares(datos, f"Pares-{nombre}",
-                   f"results/graficos/generadores_histogramas/Pares_{nombre}.png")
+                   f"results/graficos/generadores/Pares_{nombre}.png")
         plot_cubo(datos, f"Cubo-{nombre}",
-                  f"results/graficos/generadores_histogramas/Cubo_{nombre}.png")
+                  f"results/graficos/generadores/Cubo_{nombre}.png")
