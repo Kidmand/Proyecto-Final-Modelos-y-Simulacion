@@ -43,6 +43,10 @@ def plot_cubo(datos, titulo, nombre_archivo):
     ax.set_xlabel('X_i')
     ax.set_ylabel('X_{i+1}')
     ax.set_zlabel("X_{i+2}")
+
+    # Rotar el cubo 
+    ax.view_init(elev=70, azim=55)
+
     plt.savefig(nombre_archivo)
     plt.close()
 
