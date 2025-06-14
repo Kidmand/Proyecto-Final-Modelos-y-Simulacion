@@ -1,17 +1,18 @@
 # Guía de Trabajo Especial-A
 
 **Integrantes del grupo**: Giménez García Daián, Gómez Rocío Guadalupe  
-**Fecha**: 15 de junio de 2025  
+**Fecha**: 15 de junio de 2025
 
 ---
 
 ## Resumen
 
-El siguiente trabajo tiene por objetivo estudiar los siguientes métodos de generación de números pseudoaleatorios uniformes: Generador Congruencial Lineal, XORShift y Mersenne Twister. Para ello, se realiza en un inicio un análisis estadístico de tales RNGs (*Random Number Generators*), en el cual se evalúan distintas propiedades deseables de los mismos, como aleatoriedad, uniformidad, repetibilidad, entre otros.
+El siguiente trabajo tiene por objetivo estudiar los siguientes métodos de generación de números pseudoaleatorios uniformes: Generador Congruencial Lineal, XORShift y Mersenne Twister. Para ello, se realiza en un inicio un análisis estadístico de tales RNGs (_Random Number Generators_), en el cual se evalúan distintas propiedades deseables de los mismos, como aleatoriedad, uniformidad, repetibilidad, entre otros.
 
 A continuación, se los aplica a un problema concreto: una simulación de un sistema de colas de un solo servidor en donde los arribos de los clientes sigue un proceso de Poisson no homogéneo y los tiempos de atención un distribución exponencial. Finalmente, analizamos cómo impacta cada método en el comportamiento observado en la simulación.
 
 ---
+
 ## Descripción teórica de los generadores
 
 ### 1. Generador Congruencial Lineal (LCG)
@@ -24,22 +25,20 @@ Los parámetros del generador son a, c, M y la semilla y₀, donde a, c y y₀ s
 
 Esto genera una sucesión y₁, y₂, ..., yₙ, ... con valores en el conjunto {0, 1, ..., M-1}.
 
-**Parámetros utilizados:**  
-- a = 16807  
-- c = 0  
-- m = 2³¹ - 1  
+**Parámetros utilizados:**
+
+- a = 16807
+- c = 0
+- m = 2³¹ - 1
 - y₀ = 12345
 
 Como se busca una secuencia de números aleatorios en el intervalo (0,1), se toma:  
 Uₙ = yₙ / M
 
-
 **Calidad esperada**:  
 Este generador, con los parámetros seleccionados (`a = 16807`, `c = 0`, `M = 2^{31} - 1`), corresponde al generador de Lehmer, el cual es reconocido por su buena calidad estadística. [1]
 
 Presenta un **período máximo de \( M - 1 \)**, lo cual nos garantiza una secuencia extensa antes de repetir valores. Por ello,se anticipa un desempeño adecuado en simulaciones que requieran números pseudoaleatorios uniformemente distribuidos, como las utilizadas en este trabajo.
-
-
 
 ### 2. XORShift
 
@@ -84,14 +83,13 @@ T = (I + Lᵃ)(I + Rᵇ)(I + Rᶜ)
 
 con parámetros a, b, c adecuados, podemos construir una matriz de orden 2³² - 1, lo cual garantiza un período máximo para la secuencia generada.
 
+**Parámetros Usados:**
 
-**Parámetros Usados:**  
-- \( a = 1 \)  
-- \( b = 21 \)  
+- \( a = 1 \)
+- \( b = 21 \)
 - \( c = 20 \)
 
 - \( x = 12345 \)
-
 
 Estos valores corresponden a una de las tuplas recomendadas en el artículo original de Marsaglia.
 
@@ -127,7 +125,7 @@ Con la restricción de que $2^{ n * w - r} - 1$ sea un primo de Mersenne.
 
 El Mersenne Twister genera una secuencia de números a partir de una recurrencia lineal sobre un campo finito binario $\mathbb{F}_2$.
 
-La idea general es definir una sucesión $x_{i}$ mediante una relación de recurrencia sencilla y luego devolver números de la forma $x_{i}^T$ donde $T$ es una matriz invertible en $\mathbb{F}_2$ (llamada *tempering matrix*).
+La idea general es definir una sucesión $x_{i}$ mediante una relación de recurrencia sencilla y luego devolver números de la forma $x_{i}^T$ donde $T$ es una matriz invertible en $\mathbb{F}_2$ (llamada _tempering matrix_).
 
 Esta sucesión se define como:
 
@@ -137,13 +135,12 @@ $$
 
 con k = 0, 1, 2...
 
-
 - $x_{k}$: k-ésimo número del estado interno (32 bits)
 - $(x_k^u \,\|\, x_{k+1}^l)$: combinación de los bits altos de `x[k]` y los bajos de `x[k+1]`
 - $A$ : matriz de transformación lineal
 - ⊕ : operación XOR
 
-La transformación *twist* usa la matriz $A$ que se define como:
+La transformación _twist_ usa la matriz $A$ que se define como:
 
 $
 A =
@@ -152,7 +149,6 @@ A =
 a_{w-1} & (a_{w-2}, \dots, a_0)
 \end{pmatrix}
 $
-
 
 - $I_{w-1}$ : matriz identidad de tamaño $(w-1) × (w-1)$
 
@@ -183,19 +179,65 @@ Donde:
 - `&` es la operación AND bit a bit,
 - `^` representa XOR bit a bit.
 
+## Descripción del problema
 
-## Descripción del problema:
+El objetivo de este trabajo es simular un sistema de colas con un único servidor, donde los clientes llegan en distintos momentos y son atendidos en orden de llegada. La particularidad del problema radica en que la tasa de llegada de clientes varía con el tiempo, mientras que los tiempos de atención siguen una distribución aleatoria fija.
 
-### Detalles del método de simulación.
-- La idea principal del método radica en generar durante 48 horas tanto el proceso de poisson que sería los momentos en que los clientes llegan, y los horarios de atención que siguen una distribución exponencial de parámetro lamda = 1/35. Por lo que en primera parte simulamos el proceso, guardamos todos los datos en un array y con el tamaño de ese array simulamos los horarios de atención y guardamos todos esos datos en otro array. 
-Luego con esos dos arrays vamos calculando los demás datos, es decir
+### Características del sistema:
 
+- **Llegadas**: siguen un proceso de Poisson no homogéneo, con una tasa que varía a lo largo del tiempo según la función:
 
-[1] Park, S. K., & Miller, K. W. (1988). Random number generators: Good ones are hard to find. *Communications of the ACM*, 31(10), 1192–1201. https://doi.org/10.1145/63039.63042
+  $
+  \lambda(t) = 20 + 10 \cdot \cos\left(\frac{\pi t}{12}\right)
+  $
 
-[2]  Marsaglia, George (July 2003). "Xorshift RNGs". Journal of Statistical Software.
+  Esta expresión indica que los clientes llegan con mayor frecuencia en ciertos momentos del día, imitando situaciones reales como las horas pico.
 
+- **Atención**: los tiempos de servicio de los clientes siguen una distribución exponencial con tasa fija:
 
+  $
+  \mu = 35 \text{ clientes/hora}
+  $
 
+- **Condiciones del sistema**:
+  - Un solo servidor atiende a los clientes por orden de llegada.
+  - No hay un límite en la cantidad de clientes que pueden esperar en la cola.
+  - La simulación abarca un período total de 48 horas.
 
+Esta configuración permite observar cómo se comporta el sistema a lo largo del tiempo y comparar el impacto que tiene el uso de diferentes generadores de números aleatorios.
 
+## Metodología
+
+Para evaluar la calidad y el impacto de los generadores seleccionados (LCG, XORShift y Mersenne Twister), se implementaron una serie de pruebas estadísticas y una simulación completa del sistema de colas. El enfoque se dividió en dos partes principales:
+
+### 1. Tests de calidad de los generadores
+
+Se desarrollaron pruebas automatizadas en Python utilizando la biblioteca `pytest`, con el fin de comprobar algunas propiedades básicas deseables en los generadores:
+
+- **Repetibilidad**: Se comprobó que los generadores producen siempre la misma secuencia si se les da la misma semilla. Esto es fundamental para asegurar que los experimentos puedan repetirse.
+- **Uniformidad**: Se generaron 100.000 valores con cada generador. Se calcularon la media y la varianza empíricas, y se compararon con los valores teóricos de una distribución uniforme U(0,1) (esperando una media ≈ 0.5 y varianza ≈ 1/12).
+
+### 2. Simulación del sistema de colas
+
+Para analizar el comportamiento del sistema bajo cada generador, se simuló el proceso completo de atención durante 48 horas. La simulación consistió en:
+
+- **Generación de arribos**: Se usó el método de _thinning_ para simular un proceso de Poisson no homogéneo. Se generan candidatos usando una tasa constante máxima (`λ_max = 30`), y se aceptan con probabilidad proporcional a la tasa real λ(t).
+- **Generación de servicios**: Los tiempos de atención se obtienen aplicando la transformación inversa a números uniformes generados, para simular una distribución exponencial con parámetro μ = 35.
+
+- **Modelo de atención**: Se simula el comportamiento del servidor minuto a minuto. En cada paso, se decide si el cliente debe esperar (si llegó antes de que el servidor esté libre) o si puede ser atendido inmediatamente. También se registra cuánto tiempo estuvo libre el servidor antes de la llegada de un nuevo cliente.
+
+Se utilizaron arrays para almacenar:
+
+- Tiempos de llegada,
+- Tiempos de atención,
+- Tiempos de espera por parte de los clientes,
+- Períodos en los que el servidor estuvo ocioso,
+- Evolución de la longitud de la cola.
+
+Estos datos luego se procesan para calcular métricas globales, como el porcentaje de tiempo ocupado, la longitud media de la cola, y el tiempo promedio en el sistema. Además, se generan gráficos e histogramas para observar visualmente el comportamiento del sistema bajo cada generador.
+
+---
+
+[1] Park, S. K., & Miller, K. W. (1988). Random number generators: Good ones are hard to find. _Communications of the ACM_, 31(10), 1192–1201. https://doi.org/10.1145/63039.63042
+
+[2] Marsaglia, George (July 2003). "Xorshift RNGs". Journal of Statistical Software.
