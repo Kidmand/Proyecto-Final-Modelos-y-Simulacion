@@ -42,12 +42,12 @@ def histograma_tiempos_de_espera(tiempo_espera, titulo, nombre_archivo):
 def utilizacion_servidor(utilizacion_horas, titulo, nombre_archivo):
     horas = list(range(len(utilizacion_horas)))  # 0 a 47
 
-    plt.plot(horas, utilizacion_horas, linestyle='-')
+    plt.plot(horas, utilizacion_horas, linestyle='-', marker='o', markersize=4)
     plt.title(titulo)
     plt.xlabel('Hora')
     plt.ylabel('Utilización (%)')
     plt.grid(True)
-    plt.xticks(horas[::2])
+    plt.xticks(horas[::5])
     plt.savefig(nombre_archivo)
     plt.close()
 
@@ -100,12 +100,12 @@ if __name__ == "__main__":
         utilizacion_horas = porcentaje_tiempo_ocupado_por_hora(
             espera_servidor, HORAS)
         evolucion_longitud_de_cola(
-            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/graficos/simulacion_histogramas/Longitud_{nombre}.png")
+            distribucion_longitud_cola, f"Longitud Cola {nombre}", f"results/graficos/simulacion/Longitud_{nombre}.png")
         histograma_tiempos_de_espera(
-            tiempo_espera, f"Histograma Espera {nombre}", f"results/graficos/simulacion_histogramas/Espera_{nombre}.png")
+            tiempo_espera, f"Histograma Espera {nombre}", f"results/graficos/simulacion/Espera_{nombre}.png")
         utilizacion_servidor(
-            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/graficos/simulacion_histogramas/Uso_{nombre}.png")
+            utilizacion_horas, f"Evolucion del uso por hora {nombre}", f"results/graficos/simulacion/Uso_{nombre}.png")
         tiempo_entre_arribos(
-            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/graficos/simulacion_histogramas/Arribos_{nombre}.png")
+            llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/graficos/simulacion/Arribos_{nombre}.png")
         tiempo_entre_servicios(
-            NT, espera_servidor, f"Tiempo entre servicios-{nombre}", f"results/graficos/simulacion_histogramas/Servicios_{nombre}.png")
+            NT, espera_servidor, f"Tiempo entre servicios-{nombre}", f"results/graficos/simulacion/Servicios_{nombre}.png")
