@@ -13,17 +13,20 @@ def test_repetibilidad():
     # Creamos una lista de 5 uniformes y vemos si ambos objetos con la misma semilla producen los mismo valores uniformes.
     LCG_1 = LCG(12345)
     LCG_2 = LCG(12345)
+
     XOR_1 = XORShift(12345)
     XOR_2 = XORShift(12345)
+
     MT_1 = MT19937(12345)
     MT_2 = MT19937(12345)
 
-    assert [LCG_1.random() for _ in range(5)] == [LCG_2.random()
-                                                  for _ in range(5)]
-    assert [XOR_1.random() for _ in range(5)] == [XOR_2.random()
-                                                  for _ in range(5)]
-    assert [MT_1.random() for _ in range(5)] == [MT_2.random()
-                                                 for _ in range(5)]
+    N = 100_000
+    assert [LCG_1.random() for _ in range(N)] == [LCG_2.random()
+                                                  for _ in range(N)]
+    assert [XOR_1.random() for _ in range(N)] == [XOR_2.random()
+                                                  for _ in range(N)]
+    assert [MT_1.random() for _ in range(N)] == [MT_2.random()
+                                                 for _ in range(N)]
 
 
 # ==========================TEST UNIFORMIDAD==========================
@@ -73,26 +76,3 @@ def test_uniformidad():
     assert actual_variance_MT == pytest.approx(
         EXPECTED_VARIANCE, abs=VARIANCE_TOLERANCE)
 
-
-# ==========================TEST CORRELACIÓN==========================
-"""
-def test_correlation():
-        # LCG
-    LCG_ = LCG(seed=12345)
-    numbers_LCG = [LCG_.random() for _ in range(N_SAMPLES)]
-
-    actual_mean_LCG = np.mean(numbers_LCG)
-    actual_variance_LCG = np.var(numbers_LCG)
-
-    # XORShift
-    XOR_ = XORShift(seed=12345)
-    numbers_XOR = [XOR_.random() for _ in range(N_SAMPLES)]
-
-    actual_mean_XOR = np.mean(numbers_XOR)
-    actual_variance_XOR = np.var(numbers_XOR)
-    actaul_correlation = 
-
-    # MT
-    MT_ = MT19937(seed=12345)
-    numbers_MT = [MT_.random() for _ in range(N_SAMPLES)]
-"""
