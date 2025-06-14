@@ -48,7 +48,8 @@ simulacion-colas/
 │
 ├── requirements.txt                  # Librerías necesarias
 ├── README.md                         # Descripción general del proyecto
-└── .gitignore                        # Archivos a ignorar por Git
+├── .gitignore                        # Archivos a ignorar por Git
+├── run.sh                            # Script para correr los test y la simulación
 
 ```
 
