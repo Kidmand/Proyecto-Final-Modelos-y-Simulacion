@@ -9,7 +9,7 @@
 
 El siguiente trabajo tiene por objetivo estudiar los siguientes métodos de generación de números pseudoaleatorios uniformes: Generador Congruencial Lineal, XORShift y Mersenne Twister. Para ello, se realiza en un inicio un análisis estadístico de tales RNGs (_Random Number Generators_), en el cual se evalúan distintas propiedades deseables de los mismos, como aleatoriedad, uniformidad, repetibilidad, entre otros.
 
-A continuación, se los aplica a un problema concreto: una simulación de un sistema de colas de un solo servidor en donde los arribos de los clientes sigue un proceso de Poisson no homogéneo y los tiempos de atención un distribución exponencial. Finalmente, analizamos cómo impacta cada método en el comportamiento observado en la simulación.
+A continuación, se los aplica a un problema concreto: una simulación de un sistema de colas de un solo servidor en donde los arribos de los clientes sigue una proceso de Poisson no homogéneo y los tiempos de atención un distribución exponencial. Finalmente, analizamos cómo impacta cada método en el comportamiento observado en la simulación.
 
 ---
 
@@ -61,7 +61,7 @@ Se tiene un conjunto de semillas Z compuesto de m-úplas (x₁, ..., xₘ) y una
 
     f(z), f(f(z)), f(f(f(z))), ...
 
-Esta secuencia no es independiente, pero sí se encuentra distribuida de manera uniforme sobre el conjunto Z.
+Esta secuencia no es independiente, pero sí se encuentra distribuída de manera uniforme sobre el conjunto Z.
 
 Para el XORShift de 32 bits implementado, el conjunto Z es el conjunto de vectores binarios 1 × 32, excluyendo al vector nulo, y la función f está representada por una matriz binaria no singular 32 × 32, denotada por T.
 
@@ -69,7 +69,7 @@ Si B es un vector binario elegido de Z de forma aleatoria y uniforme, entonces s
 
 BT, BT², BT³, ...
 
-la cual también está uniformemente distribuida sobre Z.
+la cual también está uniformemente distribuída sobre Z.
 
 Consideramos ahora la matriz I + Lᵃ, donde L es la matriz 32 × 32 con todos sus elementos en cero, excepto por unos en la subdiagonal principal. Esta matriz implementa la operación de **desplazamiento a la izquierda** (left shift), y la suma + es la suma módulo 2 (XOR).
 
@@ -217,7 +217,8 @@ Se desarrollaron pruebas automatizadas en Python utilizando la biblioteca `pytes
 - **Repetibilidad**: Se comprobó que los generadores producen siempre la misma secuencia si se les da la misma semilla. Esto es fundamental para asegurar que los experimentos puedan repetirse.
 - **Uniformidad**: Se generaron 100.000 valores con cada generador. Se calcularon la media y la varianza empíricas, y se compararon con los valores teóricos de una distribución uniforme U(0,1) (esperando una media ≈ 0.5 y varianza ≈ 1/12).
 
-Se encuentran en 
+Se encuentran en
+
 ```c
 src/test/test_generadores.py
 ```
@@ -241,27 +242,29 @@ Se utilizaron arrays para almacenar:
 
 Estos datos luego se procesan para calcular métricas globales, como el porcentaje de tiempo ocupado, la longitud media de la cola, y el tiempo promedio en el sistema. Además, se generan gráficos e histogramas para observar visualmente el comportamiento del sistema bajo cada generador.
 
-Se realizaron tests para el código de simulación en 
+Se realizaron tests para el código de simulación en
 
 ```c
 src/test/test_simulacion.py
 ```
 
 ---
+
 ## Resultados
 
 ### Análisis de RNGs (Uniformidad)
-
 
 ![Histograma LCG](/results/graficos/generadores/Histograma_LCG.png)
 ![Histograma Mersenne Twister](/results/graficos/generadores/Histograma_MersenneTwister.png)
 ![Histograma XORShift](/results/graficos/generadores/Histograma_XORShift.png)
 
 Como podemos ver en estos histogramas de los RNGs elegidos, los valores generados se encuentran uniformemente distribuídos sobre el intervalo (0,1), lo que nos lleva a pensar que los mismos generan valores de forma uniforme sobre todo el intervalo. Cumpliendo así con la propiedad de uniformidad.
-A su vez, se puede observar en los tests realizados en 
+A su vez, se puede observar en los tests realizados en
+
 ```c
 src/test/test_generadoress.py
 ```
+
 que tanto la media como la varianza que resultan de generar números aletorios con los RNGs implementados corresponden a las medidas esperadas de una distribucíon uniforme, ya que la tolerancia establecida para la varianza (0,002) y para la media (0,005) nos indica que nuestros resultados se asemejan a la media y varianza real. Se puede corroborar esto utilizando el script dado y seleccionando la opcion de correr tests de generadores.
 
 ### Análisis de RNGs (Aleatoriedad en 2D)
@@ -270,11 +273,12 @@ que tanto la media como la varianza que resultan de generar números aletorios c
 ![Pares Mersenne Twister](/results/graficos/generadores/Pares_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/generadores/Pares_XORShift.png)
 
-Se observa que los pares de números generados también se encuentran distribuídos de forma uniforme en un cuadrado de lado 1, como era de esperarse. 
+Se observa que los pares de números generados también se encuentran distribuídos de forma uniforme en un cuadrado de lado 1, como era de esperarse.
 Esto se puede ver ya que no existen patrones observables en las imágenes, sino que los puntos generados se encuentran bien distribuídos.
 Lo cual confirma de manera más precisa, que los RNGs producen secuencias de números distribuídos uniformemente en (0,1)
 
 ### Análisis de RNGs (Aleatoriedad en 3D)
+
 ![Cubo LCG](/results/graficos/generadores/Cubo_LCG.png)
 ![Cubo Mersenne Twister](/results/graficos/generadores/Cubo_MersenneTwister.png)
 
@@ -282,32 +286,36 @@ En estos dos primeros gráficos, aquellos que corresponden a los generadores LCG
 
 ![Cubo XORShift](/results/graficos/generadores/Cubo_XORShift.png)
 
-Tal no es el caso para el RNG XORShift, 
+Tal no es el caso para el RNG XORShift,
 COMPLETAR
 
 ### Velocidad
+
 Se puede verificar la velocidad de los generadores utilizando el script y seleccionando la opción de "Ejecutar análisis de generadores".
 
 En una computadora con procesador Ryzen 5 .... se obtienen los siguientes resultados:
 
-LCG tarda 0.2963 segundos en generar 1_000_000 números
-XORShift tarda 0.5894 segundos en generar 1_000_000 números
-MersenneTwister tarda 1.5502 segundos en generar 1_000_000 números
+- LCG tarda 0.2963 segundos en generar 1_000_000 números
+- XORShift tarda 0.5894 segundos en generar 1_000_000 números
+- MersenneTwister tarda 1.5502 segundos en generar 1_000_000 números
 
 Como era de esperar, se obtienen secuencias de gran tamaño en poco tiempo.
 Los generadores más sencillos como LCG y XORShift demoran menos mientras que el MT, que tiene una implementación más sofisticada es el más lento.
 
-
 ### Repetibilidad
-Se verifica en 
+
+Se verifica en
+
 ```c
 src/test/test_generadoress.py
 ```
+
 que al utilizar la misma semilla y ejecutando dos veces los generadores para obtener una secuencia de 100_000 elementos , estos sean iguales.
 
 ### Análisis de la Simulación
 
 ### Tasa de utilización del servidor en función del tiempo
+
 ![Pares LCG](/results/graficos/simulacion/Uso_LCG.png)
 ![Pares Mersenne Twister](/results/graficos/simulacion/Uso_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/simulacion/Uso_XORShift.png)
@@ -316,21 +324,21 @@ No se observa patrón alguno en el uso de los servidores a lo largo de las 48hs.
 
 Pensamos que esto se debe a la aleatoriedad en la que los clientes llegan y son atendidos. A su vez, como conclusión, podemos afirmar que el uso del servidor varía entre el 40% y 100% según el horario y el generador.
 
-
 ### Tiempo promedio en el sistema por cliente
-Se obtienen los siguientes resultados: 
-- Tiempo promedio de espera en el sistema (LCG): 0.0280 
-- Tiempo promedio de espera en el sistema (XORShift): 0.0292 
-- Tiempo promedio de espera en el sistema (MersenneTwister): 0.0290 
+
+Se obtienen los siguientes resultados:
+
+- Tiempo promedio de espera en el sistema (LCG): 0.0280
+- Tiempo promedio de espera en el sistema (XORShift): 0.0292
+- Tiempo promedio de espera en el sistema (MersenneTwister): 0.0290
 
 Dada la similitud de estos tres resultados, podemos confirmar que los RNGs producen valores de una distribución exponencial.
 
-
 ### Distribución de los tiempos de espera
+
 ![Pares LCG](/results/graficos/simulacion/Espera_LCG.png)
 ![Pares Mersenne Twister](/results/graficos/simulacion/Espera_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/simulacion/Espera_XORShift.png)
-
 
 Los resultados obtenidos son de esperarse, es decir, que los tiempo de espera sigan una distribución exponencial, dado que se puede demostrar teóricamente que esto es así, ya que la distribución exponencial tiene una propiedad llamada "Falta de memoria".
 
@@ -343,13 +351,15 @@ Esto se cumple para todo $s,t $ en $R$.
 Como nuestro código calcula los tiempos de espera, estamos haciendo sumas y restas por lo que se utiliza la propiedad mencionada.
 
 ### Evolución de la longitud de la cola en el tiempo
+
 ![Pares LCG](/results/graficos/simulacion/Longitud_LCG.png)
 ![Pares Mersenne Twister](/results/graficos/simulacion/Longitud_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/simulacion/Longitud_XORShift.png)
 
-No se observa ningún patrón en la longitud de la cola para todos los generadores. Esto es de esperarse debido a la aleatoriedad de los tiempos de atención y de llegada. 
+No se observa ningún patrón en la longitud de la cola para todos los generadores. Esto es de esperarse debido a la aleatoriedad de los tiempos de atención y de llegada.
 
 ### Distribución del tiempo entre arribos y de servicios simulados.
+
 ![Pares LCG](/results/graficos/simulacion/Arribos_LCG.png)
 ![Pares Mersenne Twister](/results/graficos/simulacion/Arribos_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/simulacion/Arribos_XORShift.png)
@@ -362,32 +372,27 @@ Además, nuestro código de generación de tiempos de llegada usa un generador d
 ![Pares Mersenne Twister](/results/graficos/simulacion/Servicios_MersenneTwister.png)
 ![Pares XORShift](/results/graficos/simulacion/Servicios_XORShift.png)
 
-Como se puede observar en los gráficos, el tiempo entre servicios suele estar cercano al 0, ya que raramente el servidor permanece ocioso. Esto se corresponde con lo observado en las gráficas de utilización del servidor.
-
+Como se puede observar en los gráficos, el tiempo entre servicios en su gran mayoría varía entre 0hs y 0.1hs, ya que raramente el servidor permanece ocioso. Esto se corresponde con lo observado en las gráficas de utilización del servidor.
 
 ## Conclusiones
-
 
 Con los parámetros elegidos para los RNGs, podemos observar el siguente impacto de cada generador en la simulación:
 
 - LCG :
-    Se obtienen menores tiempos entre los arribos lo cual fomenta la creación de colas más largas y resulta en clientes con tiempos de espera mayores a los otros RNGs.
+  Se obtienen menores tiempos entre los arribos lo cual fomenta la creación de colas más largas y resulta en clientes con tiempos de espera mayores a los otros RNGs.
 - MT :
-    Los tiempos entre arribos son mayores lo cual resulta en  colas mas cortas y  clientes con tiempos de espera de a lo sumo 0.5 (en comparación con 0.8 de LCG)
+  Los tiempos entre arribos son mayores lo cual resulta en colas mas cortas y clientes con tiempos de espera de a lo sumo 0.5 (en comparación con 0.8 de LCG)
 
 - XORShift :
-    Al utilizar este generador se obtienen tiempos de arribos menores que LCG pero mayores que MT, así podemos observar que tanto la longitud de la cola como los tiempos de espera suelen encontrarse entre los valores observados para los dos casos anteriores.
+  Al utilizar este generador se obtienen tiempos de arribos menores que LCG pero mayores que MT, así podemos observar que tanto la longitud de la cola como los tiempos de espera suelen encontrarse entre los valores observados para los dos casos anteriores.
 
 Como se ha mencionado en el análisis, nuestra implementación del XORShift de 32 bits genera hiperplanos observables en el cubo. Esto se corresponde con las limitaciones observadas para esta implementación. Se recomienda utilizar la versión de 64bits del XORShift.
 
 A su vez, la elección de la semilla de cada RNGs ha sido aleatoria y puede llevarse a cabo un estudio más exhaustivo para lograr un desempeño más eficiente con alguna semilla más apropiada.
 
-Podemos ver como el uso de buenos generadores aleatorios conducen a resultados los cuales permiten analizar y sacar conclusiones de situaciones del mundo real como lo es un sistema de colas de un solo servidor. 
-
-
+Podemos ver como el uso de buenos generadores aleatorios conducen a resultados los cuales permiten analizar y sacar conclusiones de situaciones del mundo real como lo es un sistema de colas de un solo servidor.
 
 ---
-
 
 [1] Park, S. K., & Miller, K. W. (1988). Random number generators: Good ones are hard to find. _Communications of the ACM_, 31(10), 1192–1201. https://doi.org/10.1145/63039.63042
 
