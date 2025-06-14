@@ -5,7 +5,7 @@ from generadores.LCG import LCG
 from generadores.XORShift import XORShift
 from generadores.MersenneTwister import MT19937
 
-from Simulación import guardar_info, porcentaje_tiempo_ocupado, simulation, porcentaje_tiempo_ocupado_por_hora
+from Simulación import guardar_info, porcentaje_tiempo_ocupado, simulation,  tiempo_promedio,  porcentaje_tiempo_ocupado_por_hora
 
 HORAS = 48
 
@@ -109,3 +109,5 @@ if __name__ == "__main__":
             llegadas_clientes, f"Tiempo entre arribos-{nombre}", f"results/graficos/simulacion/Arribos_{nombre}.png")
         tiempo_entre_servicios(
             NT, espera_servidor, f"Tiempo entre servicios-{nombre}", f"results/graficos/simulacion/Servicios_{nombre}.png")
+
+        print(f"Tiempo promedio de espera en el sistema ({nombre}): {tiempo_promedio(tiempos_atencion, NT):.4f} ")
