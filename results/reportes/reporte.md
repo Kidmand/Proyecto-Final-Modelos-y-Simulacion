@@ -319,9 +319,9 @@ que al utilizar la misma semilla y ejecutando dos veces los generadores para obt
 
 ### Tasa de utilización del servidor en función del tiempo
 
-![Pares LCG](/results/graficos/simulacion/Uso_LCG.png)
-![Pares Mersenne Twister](/results/graficos/simulacion/Uso_MersenneTwister.png)
-![Pares XORShift](/results/graficos/simulacion/Uso_XORShift.png)
+![Uso LCG](/results/graficos/simulacion/Uso_LCG.png)
+![Uso Mersenne Twister](/results/graficos/simulacion/Uso_MersenneTwister.png)
+![Uso XORShift](/results/graficos/simulacion/Uso_XORShift.png)
 
 No se observa patrón alguno en el uso de los servidores a lo largo de las 48hs. Por lo que se concluye que esta medida no sigue una distribución teórica vista.
 
@@ -339,9 +339,9 @@ Dada la similitud de estos tres resultados, podemos confirmar que los RNGs produ
 
 ### Distribución de los tiempos de espera
 
-![Pares LCG](/results/graficos/simulacion/Espera_LCG.png)
-![Pares Mersenne Twister](/results/graficos/simulacion/Espera_MersenneTwister.png)
-![Pares XORShift](/results/graficos/simulacion/Espera_XORShift.png)
+![Espera LCG](/results/graficos/simulacion/Espera_LCG.png)
+![Espera Mersenne Twister](/results/graficos/simulacion/Espera_MersenneTwister.png)
+![Espera XORShift](/results/graficos/simulacion/Espera_XORShift.png)
 
 Los resultados obtenidos son de esperarse, es decir, que los tiempo de espera sigan una distribución exponencial, dado que se puede demostrar teóricamente que esto es así, ya que la distribución exponencial tiene una propiedad llamada "Falta de memoria".
 
@@ -355,25 +355,25 @@ Como nuestro código calcula los tiempos de espera, estamos haciendo sumas y res
 
 ### Evolución de la longitud de la cola en el tiempo
 
-![Pares LCG](/results/graficos/simulacion/Longitud_LCG.png)
-![Pares Mersenne Twister](/results/graficos/simulacion/Longitud_MersenneTwister.png)
-![Pares XORShift](/results/graficos/simulacion/Longitud_XORShift.png)
+![Longitud cola LCG](/results/graficos/simulacion/Longitud_LCG.png)
+![Longitud cola Mersenne Twister](/results/graficos/simulacion/Longitud_MersenneTwister.png)
+![Longitud cola XORShift](/results/graficos/simulacion/Longitud_XORShift.png)
 
 No se observa ningún patrón en la longitud de la cola para todos los generadores. Esto es de esperarse debido a la aleatoriedad de los tiempos de atención y de llegada.
 
 ### Distribución del tiempo entre arribos y de servicios simulados.
 
-![Pares LCG](/results/graficos/simulacion/Arribos_LCG.png)
-![Pares Mersenne Twister](/results/graficos/simulacion/Arribos_MersenneTwister.png)
-![Pares XORShift](/results/graficos/simulacion/Arribos_XORShift.png)
+![Arribos LCG](/results/graficos/simulacion/Arribos_LCG.png)
+![Arribos Mersenne Twister](/results/graficos/simulacion/Arribos_MersenneTwister.png)
+![Arribos XORShift](/results/graficos/simulacion/Arribos_XORShift.png)
 
 En este caso también se observa una distribución exponencial en los tiempos entre arribos. Esto se corresponde a lo esperado de los tiempos generados entre cada evento en un proceso de Poisson, ya que teóricamente estos siguen una distribución exponencial.
 
 Además, nuestro código de generación de tiempos de llegada usa un generador de variables exponenciales, lo cual hace evidente que en los gráficos se observe esta distribución.
 
-![Pares LCG](/results/graficos/simulacion/Servicios_LCG.png)
-![Pares Mersenne Twister](/results/graficos/simulacion/Servicios_MersenneTwister.png)
-![Pares XORShift](/results/graficos/simulacion/Servicios_XORShift.png)
+![Servicios LCG](/results/graficos/simulacion/Servicios_LCG.png)
+![Servicios Mersenne Twister](/results/graficos/simulacion/Servicios_MersenneTwister.png)
+![Servicios XORShift](/results/graficos/simulacion/Servicios_XORShift.png)
 
 Como se puede observar en los gráficos, el tiempo entre servicios en su gran mayoría varía entre 0hs y 0.1hs, ya que raramente el servidor permanece ocioso. Esto se corresponde con lo observado en las gráficas de utilización del servidor.
 
