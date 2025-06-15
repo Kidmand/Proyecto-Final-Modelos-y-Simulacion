@@ -26,30 +26,58 @@ La simulación abarca un período de **48 horas**.
 ```
 simulacion-colas/
 │
-├── src/                              # Código fuente Python
-|   ├── analisis/
-|   |   ├── Analisis
-│   ├── generadores/                  # Implementación de generadores
+├── src/                                  # Código fuente Python
+│   ├── analisis/                         # Scripts de análisis de resultados
+│   │   ├── Analisis_generadores.py
+│   │   ├── Analisis_simulacion.py
+│   │   └── Medir_tiempos.py
+│   ├── generadores/                      # Implementación de generadores
 │   │   ├── LCG.py
-│   │   ├── XORshift.py
-│   │   └── MersenneTwiste.py
-|   ├── test/
-│   |   ├── test_generadores.py       # Script para comparar los generadores
-│   └── simulacion.py                 # (Más adelante) simulación del sistema de colas
+│   │   ├── MersenneTwister.py
+│   │   └── XORShift.py
+│   ├── test/                             # Tests automatizados
+│   │   ├── test_generadores.py
+│   │   └── test_simulacion.py
+│   └── Simulacion.py                     # Simulación del sistema de colas
 │
-├── results/                          # Resultados de simulación
-│   ├── graficos/                     # Imágenes generadas
-│   │   ├── generadores_histogramas/
-|   |   |   |── Cubo.png
-│   │   ├── simulacion_histogramas/
-|   |   |   |── Arribos.png
-│   └── reportes/                     # Informes exportados
-│       └── informe.pdf
+├── results/                              # Resultados de simulación
+│   ├── graficos/                         # Imágenes generadas
+│   │   ├── generadores/                  # Gráficos de análisis de generadores
+│   │   │   ├── Cubo_LCG.png
+│   │   │   ├── Cubo_MersenneTwister.png
+│   │   │   ├── Cubo_XORShift.png
+│   │   │   ├── Histograma_LCG.png
+│   │   │   ├── Histograma_MersenneTwister.png
+│   │   │   ├── Histograma_XORShift.png
+│   │   │   ├── Pares_LCG.png
+│   │   │   ├── Pares_MersenneTwister.png
+│   │   │   └── Pares_XORShift.png
+│   │   ├── simulacion/                   # Gráficos relacionados a la simulación
+│   │   │   ├── Arribos_LCG.png
+│   │   │   ├── Arribos_MersenneTwister.png
+│   │   │   ├── Arribos_XORShift.png
+│   │   │   ├── Espera_LCG.png
+│   │   │   ├── Espera_MersenneTwister.png
+│   │   │   ├── Espera_XORShift.png
+│   │   │   ├── Longitud_LCG.png
+│   │   │   ├── Longitud_MersenneTwister.png
+│   │   │   ├── Longitud_XORShift.png
+│   │   │   ├── Servicios_LCG.png
+│   │   │   ├── Servicios_MersenneTwister.png
+│   │   │   ├── Servicios_XORShift.png
+│   │   │   ├── Uso_LCG.png
+│   │   │   ├── Uso_MersenneTwister.png
+│   │   │   └── Uso_XORShift.png
+│   └── reportes/                         # Documentación y entregables
+│       ├── Informe.md
+│       ├── Pasos_a_seguir.md
+│       └── A - Trabajo Práctico Especial.pdf
 │
-├── requirements.txt                  # Librerías necesarias
-├── README.md                         # Descripción general del proyecto
-├── .gitignore                        # Archivos a ignorar por Git
-├── run.sh                            # Script para correr los test y la simulación
+├── requirements.txt                      # Dependencias del proyecto
+├── README.md                             # Descripción general del proyecto
+├── run.sh                                # Script para correr análisis y simulación
+└── .gitignore                            # Archivos ignorados por Git
+
 
 ```
 
@@ -82,7 +110,11 @@ pip install -r requirements.txt
 ```bash
 ./run.sh
 ```
-
+## Informe
+El informe se encuentra en 
+```bash
+results/reportes/informe.md
+```
 ## Licencia
 
 Este proyecto es de uso académico y puede reutilizarse con fines educativos.
